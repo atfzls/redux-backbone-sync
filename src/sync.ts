@@ -12,7 +12,7 @@ export function sync(store: Store<any, any>, model: any, sliceName: string) {
       }
     });
 
-  updateStore();
+  updateStore(); // for hydrating store with initial state
   const callback = () => {
     updateStore();
   }
