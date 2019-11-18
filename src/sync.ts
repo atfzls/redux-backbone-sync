@@ -37,7 +37,7 @@ export function sync(store: Store<any, any>, model: any, sliceName: string) {
     });
   };
 
-  const unsubscribeStore = subscribeToSlice("songs");
+  const unsubscribeStore = subscribeToSlice(sliceName);
 
   return [unsubscribeModel, unsubscribeStore];
 }
