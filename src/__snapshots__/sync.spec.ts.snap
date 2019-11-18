@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sync backbone model and redux store update backbone model after updating redux state updating listeners 1`] = `
+Array [
+  Object {
+    "id": 1,
+    "listeners": 1,
+    "title": "Blue in Green",
+  },
+  Object {
+    "id": 2,
+    "listeners": 0,
+    "title": "So What",
+  },
+  Object {
+    "id": 3,
+    "listeners": 0,
+    "title": "All Blues",
+  },
+]
+`;
+
+exports[`sync backbone model and redux store update backbone model after updating redux state updating multiple listeners of song 1`] = `
+Array [
+  Object {
+    "id": 1,
+    "listeners": 3,
+    "title": "Blue in Green",
+  },
+  Object {
+    "id": 2,
+    "listeners": 1,
+    "title": "So What",
+  },
+  Object {
+    "id": 3,
+    "listeners": 1,
+    "title": "All Blues",
+  },
+]
+`;
+
+exports[`sync backbone model and redux store update backbone model after updating redux state updating title of song 1`] = `
+Array [
+  Object {
+    "id": 1,
+    "listeners": 0,
+    "title": "Blue in Green",
+  },
+  Object {
+    "id": 2,
+    "listeners": 0,
+    "title": "New Title for id 2",
+  },
+  Object {
+    "id": 3,
+    "listeners": 0,
+    "title": "All Blues",
+  },
+]
+`;
+
+exports[`sync backbone model and redux store update redux after updating model updating listeners of song  1`] = `
+Object {
+  "songs": Array [
+    Object {
+      "id": 1,
+      "listeners": 1,
+      "title": "Blue in Green",
+    },
+    Object {
+      "id": 2,
+      "listeners": 0,
+      "title": "So What",
+    },
+    Object {
+      "id": 3,
+      "listeners": 0,
+      "title": "All Blues",
+    },
+  ],
+}
+`;
+
+exports[`sync backbone model and redux store update redux after updating model updating multiple listeners of song  1`] = `
+Object {
+  "songs": Array [
+    Object {
+      "id": 1,
+      "listeners": 3,
+      "title": "Blue in Green",
+    },
+    Object {
+      "id": 2,
+      "listeners": 1,
+      "title": "So What",
+    },
+    Object {
+      "id": 3,
+      "listeners": 1,
+      "title": "All Blues",
+    },
+  ],
+}
+`;
+
+exports[`sync backbone model and redux store update redux after updating model updating title of song  1`] = `
+Object {
+  "songs": Array [
+    Object {
+      "id": 1,
+      "listeners": 0,
+      "title": "New Title",
+    },
+    Object {
+      "id": 2,
+      "listeners": 0,
+      "title": "So What",
+    },
+    Object {
+      "id": 3,
+      "listeners": 0,
+      "title": "All Blues",
+    },
+  ],
+}
+`;
