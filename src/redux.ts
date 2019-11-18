@@ -23,4 +23,4 @@ export const store = createStore((state: any, action: any) => {
       return state;
     }
   }
-}, {});
+});
