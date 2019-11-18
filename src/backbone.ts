@@ -1,4 +1,4 @@
-import * as Backbone from 'backbone';
+import Backbone from 'backbone';
 
 // backbone start
 export const Song = Backbone.Model.extend({});

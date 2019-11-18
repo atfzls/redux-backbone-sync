@@ -1,6 +1,10 @@
 import { Store } from "redux";
 
-export function sync(store: Store<any, any>, model: any, sliceName: string) {
+export function sync(
+  store: Store<any, any>,
+  model: Backbone.Collection,
+  sliceName: string
+) {
   const updateStore = () =>
     store.dispatch({
       type: "EVAL",
@@ -15,10 +19,10 @@ export function sync(store: Store<any, any>, model: any, sliceName: string) {
   updateStore(); // for hydrating store with initial state
   const callback = () => {
     updateStore();
-  }
+  };
   const unsubscribeModel = () => {
-    model.off('change', callback);
-  }
+    model.off("change", callback);
+  };
   model.on("change", () => {
     updateStore();
   });
