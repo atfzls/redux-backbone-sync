@@ -4,6 +4,10 @@
   "main": "index.js",
   "author": "Atif Afzal <aafzal@sumologic.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "test:dev": "jest --watch"
+  },
   "devDependencies": {
     "@types/backbone": "^1.4.1",
     "@types/jest": "^24.0.23",
