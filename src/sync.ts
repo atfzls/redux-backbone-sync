@@ -1,10 +1,11 @@
 import * as _ from "lodash";
 import { Store } from "redux";
 import produce from "immer";
+import Backbone from "backbone";
 
 export function sync(
   store: Store<any, any>,
-  model: Backbone.Collection,
+  model: Backbone.Collection | Backbone.Model,
   slicePath: string
 ) {
   const updateStore = () =>
@@ -35,7 +36,9 @@ export function sync(
       const slice = _.get(store.getState(), key);
 
       if (oldSlice !== slice) {
-        model.reset();
+        if (model instanceof Backbone.Collection) {
+          model.reset();
+        }
         model.set(slice);
         oldSlice = slice;
       }

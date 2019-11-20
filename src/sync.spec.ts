@@ -5,6 +5,7 @@ import { sync } from "./sync";
 import { reducerWrapper } from "./reducerWrapper";
 
 describe("sync backbone model and redux store", () => {
+  let songModel: any;
   let songsCollection: any;
   let store: any;
   let disposables: Function[] = [];
@@ -515,6 +516,81 @@ describe("sync backbone model and redux store", () => {
                   ]
               `);
       });
+    });
+  });
+
+  describe("redux update for single model", () => {
+    let songModel: any;
+    beforeEach(() => {
+      interface State {
+        song?: { id: number; title: string; listeners: number };
+      }
+
+      const reducer = (
+        state: State = {},
+        action: { type: string; payload: any }
+      ): State => {
+        switch (action.type) {
+          case "INCREASE_LISTENER": {
+            return produce(state, draft => {
+              draft.song!.listeners += 1;
+            });
+          }
+          case "UPDATE_SONG_TITLE": {
+            return produce(state, draft => {
+              draft.song!.title = action.payload.title;
+            });
+          }
+          default: {
+            return state;
+          }
+        }
+      };
+
+      store = createStore(reducerWrapper(reducer));
+
+      songModel = new SongModel({
+        id: 10,
+        title: "Song Title",
+        listeners: 81
+      });
+
+      disposables = sync(store, songModel, "song");
+    });
+
+    afterEach(() => {
+      disposables.forEach(disposable => disposable());
+    });
+
+    it("should update redux state on model change", () => {
+      songModel.set("listeners", songModel.get("listeners") + 1);
+
+      expect(store.getState()).toMatchInlineSnapshot(`
+        Object {
+          "song": Object {
+            "id": 10,
+            "listeners": 82,
+            "title": "Song Title",
+          },
+        }
+      `);
+    });
+
+    it("should update model when redux state updates", () => {
+      store.dispatch({
+        type: "INCREASE_LISTENER"
+      });
+      store.dispatch({
+        type: "INCREASE_LISTENER"
+      });
+
+      expect(songModel.toJSON()).toMatchInlineSnapshot(`
+        Object {
+          "id": 10,
+          "listeners": 83,
+          "title": "Song Title",
+        }
+      `);
     });
   });
 });
