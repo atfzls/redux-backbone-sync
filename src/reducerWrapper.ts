@@ -1,4 +1,4 @@
-export const syncReducer = (reducer: any) => (
+export const reducerWrapper = (reducer: any) => (
   state: any,
   action: { type: string; payload: any }
 ) => {

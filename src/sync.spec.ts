@@ -1,16 +1,54 @@
-import { store } from "./redux";
-import { Songs, Song } from "./backbone";
+import Backbone from "backbone";
+import produce from "immer";
+import { createStore } from "redux";
 import { sync } from "./sync";
+import { reducerWrapper } from "./reducerWrapper";
 
 describe("sync backbone model and redux store", () => {
   let songs: any;
+  let store: any;
   let disposables: Function[] = [];
 
+  const SongModel = Backbone.Model.extend({});
+  const SongsCollection = Backbone.Collection.extend({
+    model: SongModel
+  });
+
   beforeEach(() => {
-    songs = new Songs([
-      new Song({ title: "Blue in Green", listeners: 0, id: 1 }),
-      new Song({ title: "So What", listeners: 0, id: 2 }),
-      new Song({ title: "All Blues", listeners: 0, id: 3 })
+    interface State {
+      songs: Array<{ id: number; title: string; listeners: number }>;
+    }
+
+    const reducer = (
+      state: State = { songs: [] },
+      action: { type: string; payload: any }
+    ): State => {
+      switch (action.type) {
+        case "INCREASE_LISTENER": {
+          const id = action.payload;
+          return produce(state, draft => {
+            draft.songs.find(song => song.id === id)!.listeners += 1;
+          });
+        }
+        case "UPDATE_SONG_TITLE": {
+          const id = action.payload.id;
+          return produce(state, draft => {
+            draft.songs.find(song => song.id === id)!.title =
+              action.payload.title;
+          });
+        }
+        default: {
+          return state;
+        }
+      }
+    };
+
+    store = createStore(reducerWrapper(reducer));
+
+    songs = new SongsCollection([
+      new SongModel({ title: "Blue in Green", listeners: 0, id: 1 }),
+      new SongModel({ title: "So What", listeners: 0, id: 2 }),
+      new SongModel({ title: "All Blues", listeners: 0, id: 3 })
     ]);
 
     disposables = sync(store, songs, "songs");
