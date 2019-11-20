@@ -1,18 +1,19 @@
+import * as _ from "lodash";
 import { Store } from "redux";
+import produce from "immer";
 
 export function sync(
   store: Store<any, any>,
   model: Backbone.Collection,
-  sliceName: string
+  slicePath: string
 ) {
   const updateStore = () =>
     store.dispatch({
       type: "EVAL",
       payload: (state: any) => {
-        return {
-          ...state,
-          [sliceName]: model.toJSON()
-        };
+        return produce(state, (draft: any) => {
+          _.set(draft, slicePath, model.toJSON());
+        });
       }
     });
 
@@ -31,7 +32,7 @@ export function sync(
     let oldSlice: any;
 
     return store.subscribe(() => {
-      const slice = store.getState()[key];
+      const slice = _.get(store.getState(), key);
 
       if (oldSlice !== slice) {
         model.reset();
@@ -41,7 +42,7 @@ export function sync(
     });
   };
 
-  const unsubscribeStore = subscribeToSlice(sliceName);
+  const unsubscribeStore = subscribeToSlice(slicePath);
 
   return [unsubscribeModel, unsubscribeStore];
 }

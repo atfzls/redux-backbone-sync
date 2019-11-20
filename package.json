@@ -11,6 +11,7 @@
   "devDependencies": {
     "@types/backbone": "^1.4.1",
     "@types/jest": "^24.0.23",
+    "@types/lodash": "^4.14.149",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
     "ts-jest": "^24.1.0",
@@ -19,6 +20,7 @@
   "dependencies": {
     "backbone": "^1.4.0",
     "immer": "^5.0.0",
+    "lodash": "^4.17.15",
     "redux": "^4.0.4"
   }
 }
