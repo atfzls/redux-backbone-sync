@@ -5,7 +5,7 @@ import { sync } from "./sync";
 import { reducerWrapper } from "./reducerWrapper";
 
 describe("sync backbone model and redux store", () => {
-  let songs: any;
+  let songsCollection: any;
   let store: any;
   let disposables: Function[] = [];
 
@@ -45,13 +45,13 @@ describe("sync backbone model and redux store", () => {
 
     store = createStore(reducerWrapper(reducer));
 
-    songs = new SongsCollection([
+    songsCollection = new SongsCollection([
       new SongModel({ title: "Blue in Green", listeners: 0, id: 1 }),
       new SongModel({ title: "So What", listeners: 0, id: 2 }),
       new SongModel({ title: "All Blues", listeners: 0, id: 3 })
     ]);
 
-    disposables = sync(store, songs, "songs");
+    disposables = sync(store, songsCollection, "songs");
   });
 
   afterEach(() => {
@@ -60,7 +60,7 @@ describe("sync backbone model and redux store", () => {
 
   describe("update redux after updating model", () => {
     it("updating title of song ", () => {
-      songs.at(0).set("title", "New Title");
+      songsCollection.at(0).set("title", "New Title");
       expect(store.getState()).toMatchInlineSnapshot(`
         Object {
           "songs": Array [
@@ -85,7 +85,7 @@ describe("sync backbone model and redux store", () => {
     });
 
     it("updating listeners of song ", () => {
-      songs.at(0).set("listeners", songs.at(0).get("listeners") + 1);
+      songsCollection.at(0).set("listeners", songsCollection.at(0).get("listeners") + 1);
       expect(store.getState()).toMatchInlineSnapshot(`
         Object {
           "songs": Array [
@@ -110,12 +110,12 @@ describe("sync backbone model and redux store", () => {
     });
 
     it("updating multiple listeners of song ", () => {
-      songs.at(0).set("listeners", songs.at(0).get("listeners") + 1);
-      songs.at(0).set("listeners", songs.at(0).get("listeners") + 1);
-      songs.at(0).set("listeners", songs.at(0).get("listeners") + 1);
+      songsCollection.at(0).set("listeners", songsCollection.at(0).get("listeners") + 1);
+      songsCollection.at(0).set("listeners", songsCollection.at(0).get("listeners") + 1);
+      songsCollection.at(0).set("listeners", songsCollection.at(0).get("listeners") + 1);
 
-      songs.at(1).set("listeners", songs.at(1).get("listeners") + 1);
-      songs.at(2).set("listeners", songs.at(2).get("listeners") + 1);
+      songsCollection.at(1).set("listeners", songsCollection.at(1).get("listeners") + 1);
+      songsCollection.at(2).set("listeners", songsCollection.at(2).get("listeners") + 1);
 
       expect(store.getState()).toMatchInlineSnapshot(`
         Object {
@@ -151,7 +151,7 @@ describe("sync backbone model and redux store", () => {
         }
       });
 
-      expect(songs.toJSON()).toMatchInlineSnapshot(`
+      expect(songsCollection.toJSON()).toMatchInlineSnapshot(`
         Array [
           Object {
             "id": 1,
@@ -178,7 +178,7 @@ describe("sync backbone model and redux store", () => {
         payload: 1
       });
 
-      expect(songs.toJSON()).toMatchInlineSnapshot(`
+      expect(songsCollection.toJSON()).toMatchInlineSnapshot(`
         Array [
           Object {
             "id": 1,
@@ -221,7 +221,7 @@ describe("sync backbone model and redux store", () => {
         payload: 3
       });
 
-      expect(songs.toJSON()).toMatchInlineSnapshot(`
+      expect(songsCollection.toJSON()).toMatchInlineSnapshot(`
         Array [
           Object {
             "id": 1,
