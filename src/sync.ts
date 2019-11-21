@@ -5,8 +5,8 @@ import Backbone from "backbone";
 
 export function sync(
   store: Store<any, any>,
-  model: Backbone.Collection | Backbone.Model,
-  slicePath: string
+  slicePath: string,
+  model: Backbone.Collection | Backbone.Model
 ) {
   const updateStore = () =>
     store.dispatch({

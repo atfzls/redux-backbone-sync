@@ -53,7 +53,7 @@ describe("sync backbone model and redux store", () => {
         new SongModel({ title: "All Blues", listeners: 0, id: 3 })
       ]);
 
-      disposables = sync(store, songsCollection, "songs");
+      disposables = sync(store, "songs", songsCollection);
     });
 
     afterEach(() => {
@@ -302,7 +302,7 @@ describe("sync backbone model and redux store", () => {
         new SongModel({ title: "All Blues", listeners: 0, id: 3 })
       ]);
 
-      disposables = sync(store, songsCollection, "very.nested.songs");
+      disposables = sync(store, "very.nested.songs", songsCollection);
     });
 
     afterEach(() => {
@@ -554,7 +554,7 @@ describe("sync backbone model and redux store", () => {
         listeners: 81
       });
 
-      disposables = sync(store, songModel, "song");
+      disposables = sync(store, "song", songModel);
     });
 
     afterEach(() => {
