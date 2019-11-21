@@ -520,7 +520,6 @@ describe("sync backbone model and redux store", () => {
   });
 
   describe("redux update for single model", () => {
-    let songModel: any;
     beforeEach(() => {
       interface State {
         song?: { id: number; title: string; listeners: number };
