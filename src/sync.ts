@@ -6,7 +6,8 @@ import Backbone from "backbone";
 export function sync(
   store: Store<any, any>,
   slicePath: string,
-  model: Backbone.Collection | Backbone.Model
+  model: Backbone.Collection | Backbone.Model,
+  modelAttribute?: string,
 ) {
   const updateStore = () =>
     store.dispatch({
@@ -25,7 +26,11 @@ export function sync(
   const unsubscribeModel = () => {
     model.off("change", callback);
   };
-  model.on("change", () => {
+  let movelEvent = 'change';
+  if (modelAttribute) {
+    movelEvent += `:${modelAttribute}`
+  }
+  model.on(movelEvent, () => {
     updateStore();
   });
 
