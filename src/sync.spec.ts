@@ -1,8 +1,8 @@
 import Backbone from "backbone";
 import produce from "immer";
 import { createStore } from "redux";
-import { sync } from "./sync";
 import { reducerWrapper } from "./reducerWrapper";
+import { sync } from "./sync";
 
 describe("sync backbone model and redux store", () => {
   let songModel: any;
@@ -593,7 +593,7 @@ describe("sync backbone model and redux store", () => {
     });
   });
 
-  describe('redux state with model attribute', () => {
+  describe("redux state with model attribute", () => {
     beforeEach(() => {
       interface State {
         song?: { id: number; title: string; listeners: number };
@@ -628,7 +628,7 @@ describe("sync backbone model and redux store", () => {
         listeners: 81
       });
 
-      disposables = sync(store, "song", songModel, 'listeners');
+      disposables = sync(store, "song", songModel, "listeners");
     });
 
     afterEach(() => {
@@ -666,8 +666,8 @@ describe("sync backbone model and redux store", () => {
       `);
     });
 
-    it('should not update title in redux if title is updated in model', () => {
-      songModel.set("title", 'New Title');
+    it("should not update title in redux if title is updated in model", () => {
+      songModel.set("title", "New Title");
 
       expect(store.getState()).toMatchInlineSnapshot(`
         Object {

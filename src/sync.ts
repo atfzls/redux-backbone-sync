@@ -11,7 +11,7 @@ export function sync(
 ) {
   const updateStore = () =>
     store.dispatch({
-      type: "EVAL",
+      type: "REDUX_BACKBONE_EVAL",
       payload: (state: any) => {
         return produce(state, (draft: any) => {
           _.set(draft, slicePath, model.toJSON());
