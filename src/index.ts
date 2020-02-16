@@ -1,8 +1,8 @@
+import Backbone from 'backbone';
+import produce from 'immer';
 import get from 'lodash.get';
 import set from 'lodash.set';
-import { Store } from "redux";
-import produce from "immer";
-import Backbone from "backbone";
+import { Store } from 'redux';
 
 const ACTION_CONSTANT = 'REDUX_BACKBONE_EVAL';
 
@@ -10,7 +10,7 @@ export function syncReduxBackbone(
   store: Store,
   slicePath: string,
   model: Backbone.Collection | Backbone.Model,
-  modelAttribute?: string
+  modelAttribute?: string,
 ) {
   const updateStore = () =>
     store.dispatch({
@@ -20,20 +20,20 @@ export function syncReduxBackbone(
           set(
             draft,
             slicePath,
-            modelAttribute ? model.get(modelAttribute) : model.toJSON()
+            modelAttribute ? model.get(modelAttribute) : model.toJSON(),
           );
         });
-      }
+      },
     });
 
   updateStore(); // for hydrating store with initial state
 
-  let modelEvent = "change";
+  let modelEvent = 'change';
   if (modelAttribute) {
     modelEvent += `:${modelAttribute}`;
   }
   const unsubscribeModel = () => {
-    model.off("change", updateStore);
+    model.off('change', updateStore);
   };
   model.on(modelEvent, () => {
     updateStore();
@@ -68,7 +68,7 @@ export function syncReduxBackbone(
 
 export const reduxBackboneReducerWrapper = (reducer: any) => (
   state: any,
-  action: any
+  action: any,
 ) => {
   if (action.type === ACTION_CONSTANT) {
     return action.payload(state);
