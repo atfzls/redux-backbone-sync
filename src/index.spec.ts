@@ -1,8 +1,7 @@
 import Backbone from "backbone";
 import produce from "immer";
 import { createStore } from "redux";
-import { reducerWrapper } from "./reducerWrapper";
-import { sync } from "./sync";
+import { reducerWrapper, sync } from ".";
 
 describe("sync backbone model and redux store", () => {
   let songModel: any;

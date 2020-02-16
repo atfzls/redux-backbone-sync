@@ -4,15 +4,17 @@ import { Store } from "redux";
 import produce from "immer";
 import Backbone from "backbone";
 
+const ACTION_CONSTANT = 'REDUX_BACKBONE_EVAL';
+
 export function sync(
-  store: Store<any, any>,
+  store: Store,
   slicePath: string,
   model: Backbone.Collection | Backbone.Model,
   modelAttribute?: string
 ) {
   const updateStore = () =>
     store.dispatch({
-      type: "REDUX_BACKBONE_EVAL",
+      type: ACTION_CONSTANT,
       payload: (state: any) => {
         return produce(state, (draft: any) => {
           set(
@@ -63,3 +65,14 @@ export function sync(
 
   return [unsubscribeModel, unsubscribeStore];
 }
+
+export const reducerWrapper = (reducer: any) => (
+  state: any,
+  action: any
+) => {
+  if (action.type === ACTION_CONSTANT) {
+    return action.payload(state);
+  }
+
+  return reducer(state, action);
+};
