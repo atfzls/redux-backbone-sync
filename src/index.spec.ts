@@ -1,7 +1,7 @@
 import Backbone from "backbone";
 import produce from "immer";
 import { createStore } from "redux";
-import { reducerWrapper, sync } from ".";
+import { reduxBackboneReducerWrapper, syncReduxBackbone } from ".";
 
 describe("sync backbone model and redux store", () => {
   let songModel: any;
@@ -44,7 +44,7 @@ describe("sync backbone model and redux store", () => {
         }
       };
 
-      store = createStore(reducerWrapper(reducer));
+      store = createStore(reduxBackboneReducerWrapper(reducer));
 
       songsCollection = new SongsCollection([
         new SongModel({ title: "Blue in Green", listeners: 0, id: 1 }),
@@ -52,7 +52,7 @@ describe("sync backbone model and redux store", () => {
         new SongModel({ title: "All Blues", listeners: 0, id: 3 })
       ]);
 
-      disposables = sync(store, "songs", songsCollection);
+      disposables = syncReduxBackbone(store, "songs", songsCollection);
     });
 
     afterEach(() => {
@@ -293,7 +293,7 @@ describe("sync backbone model and redux store", () => {
         }
       };
 
-      store = createStore(reducerWrapper(reducer));
+      store = createStore(reduxBackboneReducerWrapper(reducer));
 
       songsCollection = new SongsCollection([
         new SongModel({ title: "Blue in Green", listeners: 0, id: 1 }),
@@ -301,7 +301,7 @@ describe("sync backbone model and redux store", () => {
         new SongModel({ title: "All Blues", listeners: 0, id: 3 })
       ]);
 
-      disposables = sync(store, "very.nested.songs", songsCollection);
+      disposables = syncReduxBackbone(store, "very.nested.songs", songsCollection);
     });
 
     afterEach(() => {
@@ -545,7 +545,7 @@ describe("sync backbone model and redux store", () => {
         }
       };
 
-      store = createStore(reducerWrapper(reducer));
+      store = createStore(reduxBackboneReducerWrapper(reducer));
 
       songModel = new SongModel({
         id: 10,
@@ -553,7 +553,7 @@ describe("sync backbone model and redux store", () => {
         listeners: 81
       });
 
-      disposables = sync(store, "song", songModel);
+      disposables = syncReduxBackbone(store, "song", songModel);
     });
 
     afterEach(() => {
@@ -619,7 +619,7 @@ describe("sync backbone model and redux store", () => {
         }
       };
 
-      store = createStore(reducerWrapper(reducer));
+      store = createStore(reduxBackboneReducerWrapper(reducer));
 
       songModel = new SongModel({
         id: 10,
@@ -627,7 +627,7 @@ describe("sync backbone model and redux store", () => {
         listeners: 81
       });
 
-      disposables = sync(store, "song.listeners", songModel, "listeners");
+      disposables = syncReduxBackbone(store, "song.listeners", songModel, "listeners");
     });
 
     afterEach(() => {

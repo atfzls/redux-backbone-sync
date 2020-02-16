@@ -6,7 +6,7 @@ import Backbone from "backbone";
 
 const ACTION_CONSTANT = 'REDUX_BACKBONE_EVAL';
 
-export function sync(
+export function syncReduxBackbone(
   store: Store,
   slicePath: string,
   model: Backbone.Collection | Backbone.Model,
@@ -66,7 +66,7 @@ export function sync(
   return [unsubscribeModel, unsubscribeStore];
 }
 
-export const reducerWrapper = (reducer: any) => (
+export const reduxBackboneReducerWrapper = (reducer: any) => (
   state: any,
   action: any
 ) => {
