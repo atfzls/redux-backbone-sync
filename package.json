@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
-    "test:dev": "jest --watch"
+    "test:dev": "jest --watch",
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/backbone": "^1.4.1",
