@@ -628,7 +628,7 @@ describe("sync backbone model and redux store", () => {
         listeners: 81
       });
 
-      disposables = sync(store, "song", songModel, "listeners");
+      disposables = sync(store, "song.listeners", songModel, "listeners");
     });
 
     afterEach(() => {
@@ -641,9 +641,7 @@ describe("sync backbone model and redux store", () => {
       expect(store.getState()).toMatchInlineSnapshot(`
         Object {
           "song": Object {
-            "id": 10,
             "listeners": 82,
-            "title": "Song Title",
           },
         }
       `);
@@ -672,9 +670,7 @@ describe("sync backbone model and redux store", () => {
       expect(store.getState()).toMatchInlineSnapshot(`
         Object {
           "song": Object {
-            "id": 10,
             "listeners": 81,
-            "title": "Song Title",
           },
         }
       `);

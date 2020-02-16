@@ -1,7 +1,7 @@
 {
   "name": "redux-backbone-sync",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "build/index.js",
   "author": "Atif Afzal <aafzal@sumologic.com>",
   "license": "MIT",
   "scripts": {
@@ -11,16 +11,21 @@
   "devDependencies": {
     "@types/backbone": "^1.4.1",
     "@types/jest": "^24.0.23",
-    "@types/lodash": "^4.14.149",
+    "@types/lodash.get": "^4.4.6",
+    "@types/lodash.set": "^4.3.6",
+    "@types/redux": "^3.6.0",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
     "ts-jest": "^24.1.0",
     "typescript": "^3.7.2"
   },
   "dependencies": {
-    "backbone": "^1.4.0",
     "immer": "^5.0.0",
-    "lodash": "^4.17.15",
-    "redux": "^4.0.4"
+    "lodash.get": "^4.4.2",
+    "lodash.set": "^4.3.2"
+  },
+  "peerDependencies": {
+    "backbone": "*",
+    "redux": "*"
   }
 }

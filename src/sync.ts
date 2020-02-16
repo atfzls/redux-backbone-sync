@@ -1,4 +1,5 @@
-import * as _ from "lodash";
+import get from 'lodash.get';
+import set from 'lodash.set';
 import { Store } from "redux";
 import produce from "immer";
 import Backbone from "backbone";
@@ -7,30 +8,32 @@ export function sync(
   store: Store<any, any>,
   slicePath: string,
   model: Backbone.Collection | Backbone.Model,
-  modelAttribute?: string,
+  modelAttribute?: string
 ) {
   const updateStore = () =>
     store.dispatch({
       type: "REDUX_BACKBONE_EVAL",
       payload: (state: any) => {
         return produce(state, (draft: any) => {
-          _.set(draft, slicePath, model.toJSON());
+          set(
+            draft,
+            slicePath,
+            modelAttribute ? model.get(modelAttribute) : model.toJSON()
+          );
         });
       }
     });
 
   updateStore(); // for hydrating store with initial state
-  const callback = () => {
-    updateStore();
-  };
-  const unsubscribeModel = () => {
-    model.off("change", callback);
-  };
-  let movelEvent = 'change';
+
+  let modelEvent = "change";
   if (modelAttribute) {
-    movelEvent += `:${modelAttribute}`
+    modelEvent += `:${modelAttribute}`;
   }
-  model.on(movelEvent, () => {
+  const unsubscribeModel = () => {
+    model.off("change", updateStore);
+  };
+  model.on(modelEvent, () => {
     updateStore();
   });
 
@@ -38,15 +41,21 @@ export function sync(
     let oldSlice: any;
 
     return store.subscribe(() => {
-      const slice = _.get(store.getState(), key);
+      const slice = get(store.getState(), key);
 
-      if (oldSlice !== slice) {
-        if (model instanceof Backbone.Collection) {
-          model.reset();
-        }
-        model.set(slice);
-        oldSlice = slice;
+      if (oldSlice === slice) {
+        return;
       }
+      if (model instanceof Backbone.Collection) {
+        model.reset();
+      }
+      if (modelAttribute) {
+        model.set(modelAttribute, slice);
+      } else {
+        model.set(slice);
+      }
+
+      oldSlice = slice;
     });
   };
 
