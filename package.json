@@ -11,7 +11,7 @@
     "build": "rm -rf build && tsc"
   },
   "devDependencies": {
-    "@types/backbone": "^1.4.1",
+    "@types/backbone": "^1.4.2",
     "@types/jest": "^24.0.23",
     "@types/lodash.get": "^4.4.6",
     "@types/lodash.set": "^4.3.6",
