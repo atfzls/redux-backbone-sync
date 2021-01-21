@@ -23,7 +23,7 @@
     "typescript": "^3.7.2"
   },
   "dependencies": {
-    "immer": "^5.0.0",
+    "immer": "^8.0.1",
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2"
   },
